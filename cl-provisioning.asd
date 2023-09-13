@@ -40,33 +40,38 @@
 
     ;; Project stucture.
     :serial t
-    :components ((:module "src"
-                          :components
-                          ((:file "packages")
-                           (:file "utils")
-                           (:file "cl-provisioning")
-                           (:file "config-parser")))
+    :components
+    (
+     (:module "src"
+              :components
+              (
+               (:file "packages")
+               (:file "utils")
+               (:file "cl-provisioning")
+               (:file "config-parser")
+               (:module "engine"
+			:serial t
+			:components
+			(
+			 (:file "check-pre-post")
+			 (:file "install-engine")
+			 (:file "commands-local-linux")
+			 (:file "commands-local-macos")
+			 (:file "commands-ssh-linux")
+			 (:file "commands-ssh-macos")
+			 )
+			)
+               )
+	      (:static-file "README.md")
+	      (:static-file "sample.yml")
+	      (:static-file "CODE_OF_CONDUCT.md")
+	      (:static-file "LICENSE")
+	      )
+     )
 
-		 (:module "src/engine"
-                          :components
-                          (
-                           (:file "check-pre-post")
-                           (:file "install-engine")
-                           (:file "commands-local-linux")
-                           (:file "commands-local-macos")
-                           (:file "commands-ssh-linux")
-                           (:file "commands-ssh-macos")
-                           ))
-
-		 (:static-file "README.md")
-		 (:static-file "sample.yml")
-		 (:static-file "CODE_OF_CONDUCT.md")
-		 (:static-file "LICENSE")
-		 ))
-
-;; Deploy may not find libcrypto on your system.
-;; But anyways, we won't ship it to rely instead
-;; on its presence on the target OS.
-(require :cl+ssl) ; sometimes necessary.
-#+linux (deploy:define-library cl+ssl::libssl :dont-deploy T)
-#+linux (deploy:define-library cl+ssl::libcrypto :dont-deploy T)
+    ;; Deploy may not find libcrypto on your system.
+    ;; But anyways, we won't ship it to rely instead
+    ;; on its presence on the target OS.
+    (require :cl+ssl) ; sometimes necessary.
+    #+linux (deploy:define-library cl+ssl::libssl :dont-deploy T)
+    #+linux (deploy:define-library cl+ssl::libcrypto :dont-deploy T)

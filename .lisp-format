@@ -1,0 +1,22 @@
+;;;; -*- emacs-lisp -*-
+(set-default 'indent-tabs-mode nil)
+(push 'untabify *lisp-format-fixers*)
+
+(mapc (lambda (dir) (add-to-list 'load-path dir))
+      (directory-files
+       (concat (getenv "HOME")
+               "/quicklisp/dists/quicklisp/software/") t "slime-v*"))
+(require 'slime)
+
+;;; Syntax table extension for curry-compose-reader-macros
+(modify-syntax-entry ?\[ "(]" lisp-mode-syntax-table)
+(modify-syntax-entry ?\] ")[" lisp-mode-syntax-table)
+(modify-syntax-entry ?\{ "(}" lisp-mode-syntax-table)
+(modify-syntax-entry ?\} "){" lisp-mode-syntax-table)
+(modify-syntax-entry ?\« "(»" lisp-mode-syntax-table)
+(modify-syntax-entry ?\» ")«" lisp-mode-syntax-table)
+
+;;; Specify indentation levels for specific functions.
+(mapc (lambda (pair) (put (first pair) 'lisp-indent-function (second pair)))
+      '((if-let 1)
+        (if-let* 1)))
