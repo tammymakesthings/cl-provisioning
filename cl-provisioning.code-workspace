@@ -1,0 +1,79 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "cl-provisioning"
+		}
+	],
+	"settings": {
+		"editor.formatOnType": true,
+		"alive.format.indentWidth": 2,
+		"editor.autoIndent": "full",
+		"editor.trimAutoWhitespace": true,
+
+		"[lisp]": {
+			"editor.wordSeparators": "`|;:'\",()",
+			"files.encoding": "utf8",
+			"files.eol": "\n",
+			"files.insertFinalNewline": true,
+			"files.trimFinalNewlines": true,
+			"files.trimTrailingWhitespace": true,
+			"files.autoGuessEncoding": false,
+			"editor.bracketPairColorization.enabled": false,
+		},
+		"C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+	},
+	"extensions": {
+		"recommendations": [
+			"rheller.alive",
+			"jeff-hykin.better-lisp-syntax"
+
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Build ADSF System",
+				"command": "make",
+				"type": "shell",
+				"args": [ "build" ],
+				"problemMatcher": [
+					"$tsc"
+				],
+				"presentation": {
+					"reveal": "always"
+				},
+				"group": "build"
+			},
+			{
+				"label": "Run Executable",
+				"command": "make",
+				"type": "shell",
+				"args": [ "run" ],
+				"problemMatcher": [
+					"$tsc"
+				],
+				"presentation": {
+					"reveal": "always"
+				},
+				"group": "none"
+			},
+			{
+				"label": "Run Unit Tests",
+				"command": "make",
+				"type": "shell",
+				"args": [ "test" ],
+				"problemMatcher": [
+					"$tsc"
+				],
+				"presentation": {
+					"reveal": "always"
+				},
+				"group": "test"
+			}
+
+
+		]
+	}
+}
