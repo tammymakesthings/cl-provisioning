@@ -1,0 +1,13 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: fix-byte-order-marker
+    -   id: check-case-conflict
+-   repo: https://github.com/eschulte/lisp-format
+    rev: 088c8f78ca41204b44f2636275517ac09a2de6a9
+    hooks:
+    -   id: lisp-format

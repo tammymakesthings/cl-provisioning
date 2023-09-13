@@ -14,8 +14,8 @@
   (:use :cl
         :log4cl)
   (:export :main :run)
-  (:local-nicknames 
-    (#:a #:alexandria)
-    (#:engine #:cl-provisioning/engine)
-    )
+  (:local-nicknames
+   (#:a #:alexandria)
+   (#:engine #:cl-provisioning/engine)
+   )
   )

@@ -8,5 +8,5 @@
 (in-suite testmain)
 
 (test test1
-  (is (= (+ 1 1)
-         3)))
+      (is (= (+ 1 1)
+             3)))
