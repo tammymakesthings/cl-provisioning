@@ -45,16 +45,24 @@
                           ((:file "packages")
                            (:file "utils")
                            (:file "cl-provisioning")
-                           (:file "configuration")))
+                           (:file "config-parser")))
 
 		 (:module "src/engine"
                           :components
-                          ((:file "local-linux")
-                           (:file "local-macos")
-                           (:file "ssh-linux")
-                           (:file "ssh-macos")))
+                          (
+                           (:file "check-pre-post")
+                           (:file "install-engine")
+                           (:file "commands-local-linux")
+                           (:file "commands-local-macos")
+                           (:file "commands-ssh-linux")
+                           (:file "commands-ssh-macos")
+                           ))
 
-		 (:static-file "README.md")))
+		 (:static-file "README.md")
+		 (:static-file "sample.yml")
+		 (:static-file "CODE_OF_CONDUCT.md")
+		 (:static-file "LICENSE")
+		 ))
 
 ;; Deploy may not find libcrypto on your system.
 ;; But anyways, we won't ship it to rely instead

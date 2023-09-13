@@ -1,0 +1,76 @@
+version: 1
+profile_name: sample
+profile_description: "Sample Configuration Profile"
+default_user: "lispuser"
+provisioning_method: local
+
+conditions:
+- os: linux
+- architecture: "*"
+- hostname: "*"
+
+actions:
+
+    preinstall:
+        - step_name: "Do Preinstall Work"
+          action: run_command
+          command: "/bin/true"
+
+    install:
+        - step_name: "Create User"
+          action: create_user
+          user_name: lispuser
+          full_name: "Lisp User"
+          password: "lispuser!1234"
+          home_directory: "/home/lispuser"
+          shell: "/bin/bash"
+
+        - step_name: "Install Lisp"
+          action: install_packages
+          as_user: root
+          package_list:
+            - sbcl
+            - curl
+            - rlwrap
+
+        - step_name: "Download QuickLisp"
+          action: run_command
+          command: "curl -o /tmp/ql.lisp https://beta.quicklisp.org/quicklisp.lisp"
+
+        - step_name: "Install QuickLisp"
+          action: run_command
+          command: >
+              sbcl --no-sysinit --no-userinit --load /tmp/ql.lisp
+                --eval '(quicklisp-quickstart:install :path "~/.quicklisp")'
+                --eval '(ql:add-to-init-file)'
+                --quit
+
+        - step_name: "Install QuickLisp distributions"
+          action: run_command
+          command: >
+              sbcl --eval "(ql:quickload '(:cl-ppcre :linedit :sb-aclrepl))"
+                --quit
+
+        - step_name: "Add linedit trap to ~/.sbclrc"
+          action: append_to_file
+          file: ~/.sbclrc
+          append_text: |
+              ;;; Check for --no-linedit command-line option.
+              (if (member "--no-linedit" sb-ext:*posix-argv* :test 'equal)
+                  (setf sb-ext:*posix-argv*
+                       (remove "--no-linedit" sb-ext:*posix-argv* :test 'equal))
+              (when (interactive-stream-p *terminal-io*)
+                (require :sb-aclrepl)
+                (require :linedit)
+                (funcall (intern "INSTALL-REPL" :linedit) :wrap-current t)))
+
+    postinstall:
+        - step_name: "Check that QuickLisp directory exists"
+          action: test_directory_exists
+          directory: "~/quicklisp"
+        - step-name: "Check that .sbclrc was created"
+          action: test_file_exists
+          file: "~/.sbclrc"
+        - step-name: "Check that SBCL is installed"
+          action: test_executable_exists
+          executable: sbcl
