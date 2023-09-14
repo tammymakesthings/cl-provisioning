@@ -21,19 +21,6 @@ $ ./cl-provisioning [name]
 Hello [name] from cl-provisioning
 ```
 
-## Init config file
-
-Create a config file:
-
-    cp config-example.lisp config.lisp
-
-You can override global variables (for example, the port, which can be
-handy if you run the app from sources, without building a binary and
-using the `--port` flag.
-
-The config file is `load`ed before the web server starts (see the `(main)`).
-
-
 ## Roswell integration
 
 Roswell is an implementation manager and [script launcher](https://github.com/roswell/roswell/wiki/Roswell-as-a-Scripting-Environment).
@@ -43,19 +30,6 @@ A POC script is in the roswell/ directory.
 Your users can install the script with `tammymakesthings/cl-provisioning`.
 
 # Dev
-
-Load the .asd, quickload it then
-
-```
-CL-USER> (cl-provisioning/web:start-app)
-```
-
-See also:
-
-- `web::load-config &key port load-init-p`
-
-
-## Tests
 
 Tests are defined with [Fiveam](https://common-lisp.net/project/fiveam/docs/).
 

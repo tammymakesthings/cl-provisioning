@@ -1,13 +1,35 @@
+exclude: '.gitkeep'
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
-    hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
-    -   id: fix-byte-order-marker
-    -   id: check-case-conflict
--   repo: https://github.com/eschulte/lisp-format
-    rev: 088c8f78ca41204b44f2636275517ac09a2de6a9
-    hooks:
-    -   id: lisp-format
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+    - id: check-added-large-files
+      args: ['--maxkb=1024']
+    - id: check-yaml
+      args: ['--allow-multiple-documents']
+    - id: check-case-conflict
+    - id: mixed-line-ending
+      args: ['--fix=lf']
+    - id: check-merge-conflict
+    - id: check-toml
+    - id: fix-byte-order-marker
+    - id: pretty-format-json
+      args: ['--autofix', '--indent', '4']
+    - id: check-shebang-scripts-are-executable
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: check-symlinks
+    - id: destroyed-symlinks
+    - id: detect-private-key
+    - id: sort-simple-yaml
+      files: ^config/
+
+- repo: https://github.com/eschulte/lisp-format
+  rev: 088c8f78ca41204b44f2636275517ac09a2de6a9
+  hooks:
+    - id: lisp-format
+
+- repo: https://github.com/jumanjihouse/pre-commit-hooks
+  rev: 3.0.0
+  hooks:
+    - id: forbid-binary

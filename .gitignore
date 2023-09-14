@@ -37,3 +37,8 @@ tramp
 
 # cask packages
 .cask/
+
+docs/*.html
+docs/**/*.html
+**/*.tar*
+bin/*

@@ -1,22 +1,22 @@
-;;;; -*- emacs-lisp -*-
+;;;; -*- emacs-lisp; coding: utf-8; lexical-binding: t; -*-
+
 (set-default 'indent-tabs-mode nil)
-(push 'untabify *lisp-format-fixers*)
 
-(mapc (lambda (dir) (add-to-list 'load-path dir))
-      (directory-files
-       (concat (getenv "HOME")
-               "/quicklisp/dists/quicklisp/software/") t "slime-v*"))
-(require 'slime)
+(require 'paredit)
+(defun fix-trailing-parens (start end &optional _arg)
+  "Use `paredit-close-parenthesis' to fix trailing parens."
+  (interactive (if current-prefix-arg
+                   (list (point-min) (point-max) current-prefix-arg)
+                 (list (region-beginning) (region-end) nil)))
+  (let ((c (current-column)))
+    (save-excursion
+      (save-restriction
+        (narrow-to-region (point-min) end)
+        (goto-char start)
+        (while (re-search-forward "^ *)" nil t)
+        (forward-char -1)
+        (paredit-close-parenthesis))))
+  (move-to-column c)))
 
-;;; Syntax table extension for curry-compose-reader-macros
-(modify-syntax-entry ?\[ "(]" lisp-mode-syntax-table)
-(modify-syntax-entry ?\] ")[" lisp-mode-syntax-table)
-(modify-syntax-entry ?\{ "(}" lisp-mode-syntax-table)
-(modify-syntax-entry ?\} "){" lisp-mode-syntax-table)
-(modify-syntax-entry ?\« "(»" lisp-mode-syntax-table)
-(modify-syntax-entry ?\» ")«" lisp-mode-syntax-table)
-
-;;; Specify indentation levels for specific functions.
-(mapc (lambda (pair) (put (first pair) 'lisp-indent-function (second pair)))
-      '((if-let 1)
-        (if-let* 1)))
+(pushnew 'fix-trailing-parens *lisp-format-fixers*)
+(pushnew #'untabify *lisp-format-fixers*)

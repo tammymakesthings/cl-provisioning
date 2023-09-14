@@ -1,35 +1,26 @@
 (in-package :asdf-user)
-
 (defsystem "cl-provisioning-tests"
     :description "Test suite for the cl-provisioning system"
     :author "Tammy Cravit <tammy@tammymakesthings.com>"
-    :version "0.1.0"
-    :depends-on (:cl-provisioning
-		 :fiveam)
+    :version "0.0.1"
+    :depends-on (
+		 :cl-provisioning
+		 :fiveam
+		 )
     :license "MIT"
     :serial t
-    :components
-    (
-     (:module "tests"
-              :serial t
-              :components
-              (
-               (:file "packages")
-               (:file "test-cl-provisioning")
-               (:file "test-config-parser")
-               (:file "test-packages")
-               (:file "test-utils")
-               (:module "engine"
-			:serial t
-			:components
-			(
-			 (:file "test-check-pre-post")
-			 (:file "test-commands-local-linux")
-			 (:file "test-commands-local-macos")
-			 (:file "test-commands-ssh-linux")
-			 (:file "test-commands-ssh-macos")
-			 (:file "test-install-engine")
-			 )
-			)
-	       )
-	      )
+    :components (
+		 (:module "tests"
+			  :serial t
+			  :components (
+				       (:file "packages")
+				       (:file "test-cl-provisioning")
+				       )
+			  )
+		 (:static-file "README.md")
+		 (:static-file "CODE_OF_CONDUCT.md")
+		 )
+
+    ;; The following would not return the right exit code on error, but still 0.
+    ;; :perform (test-op (op _) (symbol-call :fiveam :run-all-tests))
+    )

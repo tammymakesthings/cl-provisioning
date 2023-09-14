@@ -18,7 +18,7 @@ charset = utf-8
 indent_style = space
 indent_size = 4
 
-[*.{lisp,cl,asdf,asd}]
+[*.{lisp,asd,ros}]
 indent_style = space
 indent_size = 2
 
@@ -27,6 +27,6 @@ indent_size = 2
 indent_style = tab
 
 # Matches the exact files either package.json or .travis.yml
-[{package.json,.travis.yml,*.code-workspace}]
+[{package.json,.travis.yml}]
 indent_style = space
 indent_size = 2
