@@ -19,7 +19,9 @@ TEST_FILES      := $(shell find tests -type f -name '*.lisp')
 ASDF_FILES      := $(wildcard *.asd)
 ROSWELL_FILES   := $(shell find roswell -type f -name '*.ros')
 EXTRA_FILES     := Makefile \
-		   $(shell find . -type f -name '*.md') \
+		   $(shell find . -type f -name '*.md' -o -name '*.markdown') \
+		   $(shell find . -type f -name '*.rst') \
+		   $(shell find . -type f -name '*.org') \
 		   $(shell find . -type f -name '*.json' -o -name '*.toml')
 
 ALL_FILES       := $(SOURCE_FILES) \
